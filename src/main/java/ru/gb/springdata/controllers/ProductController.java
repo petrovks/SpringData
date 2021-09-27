@@ -17,7 +17,6 @@ public class ProductController {
     private final ProductService productService;
     private final CategoryService categoryService;
 
-
     @GetMapping("/products")
     public List<ProductDto> findAll() {
         List<Product> products = productService.findAll();
