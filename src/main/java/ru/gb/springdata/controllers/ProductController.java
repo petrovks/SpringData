@@ -16,7 +16,7 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
     private final CategoryService categoryService;
-
+// список всехпродуктов
     @GetMapping("/products")
     public List<ProductDto> findAll() {
         List<Product> products = productService.findAll();
@@ -26,12 +26,12 @@ public class ProductController {
         }
         return productDtos;
     }
-
+//выбор продукта по id
     @GetMapping("/products/{id}")
     public ProductDto findById(@PathVariable Long id) {
         return new ProductDto(productService.findById(id).get());
     }
-
+    //добавление нового продукта
     @PostMapping("/new_product")
     public ProductDto save(@RequestBody ProductDto productDto) {
         Product product = new Product();
@@ -42,12 +42,13 @@ public class ProductController {
         productService.save(product);
         return new ProductDto(product);
     }
-
+//удаление продукта
     @GetMapping("delete/product/{id}")
     public void delete(@PathVariable Long id) {
         productService.delete(id);
     }
 
+    //выбор продуктов с диапозоном цен
     @GetMapping("products/between")
     public List<ProductDto> findAllByPriceBetween(@RequestParam(name = "min_price") int minPrice, @RequestParam(name = "max_price") int maxPrice) {
         List<Product> products = productService.findAllByPriceBetween(minPrice, maxPrice);
