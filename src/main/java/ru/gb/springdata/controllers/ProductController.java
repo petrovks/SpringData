@@ -20,11 +20,11 @@ public class ProductController {
     @GetMapping("/products")
     public List<ProductDto> findAll() {
         List<Product> products = productService.findAll();
-        List<ProductDto> productDtos = new ArrayList<>();
+        List<ProductDto> productDto = new ArrayList<>();
         for (Product p: products) {
-            productDtos.add(new ProductDto(p));
+            productDto.add(new ProductDto(p));
         }
-        return productDtos;
+        return productDto;
     }
 //выбор продукта по id
     @GetMapping("/products/{id}")
@@ -52,30 +52,30 @@ public class ProductController {
     @GetMapping("products/between")
     public List<ProductDto> findAllByPriceBetween(@RequestParam(name = "min_price") int minPrice, @RequestParam(name = "max_price") int maxPrice) {
         List<Product> products = productService.findAllByPriceBetween(minPrice, maxPrice);
-        List<ProductDto> productDtos = new ArrayList<>();
+        List<ProductDto> productDto = new ArrayList<>();
         for (Product p: products) {
-            productDtos.add(new ProductDto(p));
+            productDto.add(new ProductDto(p));
         }
-        return productDtos;
+        return productDto;
     }
 
     @GetMapping("products/more")
     public List<ProductDto> findAllByPriceGreaterThan(@RequestParam(name = "min_price") int minPrice) {
         List<Product> products = productService.findAllByPriceGreaterThan(minPrice);
-        List<ProductDto> productDtos = new ArrayList<>();
+        List<ProductDto> productDto = new ArrayList<>();
         for (Product p: products) {
-            productDtos.add(new ProductDto(p));
+            productDto.add(new ProductDto(p));
         }
-        return productDtos;
+        return productDto;
     }
 
     @GetMapping("products/less")
     public List<ProductDto> findAllByPriceLessThan(@RequestParam(name = "max_price") int maxPrice) {
         List<Product> products = productService.findAllByPriceLessThan(maxPrice);
-        List<ProductDto> productDtos = new ArrayList<>();
+        List<ProductDto> productDto = new ArrayList<>();
         for (Product p: products) {
-            productDtos.add(new ProductDto(p));
+            productDto.add(new ProductDto(p));
         }
-        return productDtos;
+        return productDto;
     }
 }
