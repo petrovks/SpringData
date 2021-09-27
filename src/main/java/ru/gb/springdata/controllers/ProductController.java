@@ -48,34 +48,34 @@ public class ProductController {
         productService.delete(id);
     }
 
-    //выбор продуктов с диапозоном цен
-    @GetMapping("products/between")
-    public List<ProductDto> findAllByPriceBetween(@RequestParam(name = "min_price") int minPrice, @RequestParam(name = "max_price") int maxPrice) {
-        List<Product> products = productService.findAllByPriceBetween(minPrice, maxPrice);
-        List<ProductDto> productDto = new ArrayList<>();
-        for (Product p: products) {
-            productDto.add(new ProductDto(p));
-        }
-        return productDto;
-    }
-
-    @GetMapping("products/more")
-    public List<ProductDto> findAllByPriceGreaterThan(@RequestParam(name = "min_price") int minPrice) {
-        List<Product> products = productService.findAllByPriceGreaterThan(minPrice);
-        List<ProductDto> productDto = new ArrayList<>();
-        for (Product p: products) {
-            productDto.add(new ProductDto(p));
-        }
-        return productDto;
-    }
-
-    @GetMapping("products/less")
-    public List<ProductDto> findAllByPriceLessThan(@RequestParam(name = "max_price") int maxPrice) {
-        List<Product> products = productService.findAllByPriceLessThan(maxPrice);
-        List<ProductDto> productDto = new ArrayList<>();
-        for (Product p: products) {
-            productDto.add(new ProductDto(p));
-        }
-        return productDto;
-    }
+//    //выбор продуктов с диапозоном цен
+//    @GetMapping("products/between")
+//    public List<ProductDto> findAllByPriceBetween(@RequestParam(name = "min_price") int minPrice, @RequestParam(name = "max_price") int maxPrice) {
+//        List<Product> products = productService.findAllByPriceBetween(minPrice, maxPrice);
+//        List<ProductDto> productDto = new ArrayList<>();
+//        for (Product p: products) {
+//            productDto.add(new ProductDto(p));
+//        }
+//        return productDto;
+//    }
+//
+//    @GetMapping("products/more")
+//    public List<ProductDto> findAllByPriceGreaterThan(@RequestParam(name = "min_price") int minPrice) {
+//        List<Product> products = productService.findAllByPriceGreaterThan(minPrice);
+//        List<ProductDto> productDto = new ArrayList<>();
+//        for (Product p: products) {
+//            productDto.add(new ProductDto(p));
+//        }
+//        return productDto;
+//    }
+//
+//    @GetMapping("products/less")
+//    public List<ProductDto> findAllByPriceLessThan(@RequestParam(name = "max_price") int maxPrice) {
+//        List<Product> products = productService.findAllByPriceLessThan(maxPrice);
+//        List<ProductDto> productDto = new ArrayList<>();
+//        for (Product p: products) {
+//            productDto.add(new ProductDto(p));
+//        }
+//        return productDto;
+//    }
 }
