@@ -1,6 +1,7 @@
 package ru.gb.springdata.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.springdata.dto.ProductDto;
 import ru.gb.springdata.model.Product;
@@ -10,6 +11,7 @@ import ru.gb.springdata.model.Category;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,12 +21,7 @@ public class ProductController {
 // список всехпродуктов
     @GetMapping("/products")
     public List<ProductDto> findAll() {
-        List<Product> products = productService.findAll();
-        List<ProductDto> productDto = new ArrayList<>();
-        for (Product p: products) {
-            productDto.add(new ProductDto(p));
-        }
-        return productDto;
+        return productService.findAll().stream().map(ProductDto::new).collect(Collectors.toList());
     }
 //выбор продукта по id
     @GetMapping("/products/{id}")
@@ -51,31 +48,27 @@ public class ProductController {
     //выбор продуктов с диапозоном цен
     @GetMapping("products/between")
     public List<ProductDto> findAllByPriceBetween(@RequestParam(name = "min_price") int minPrice, @RequestParam(name = "max_price") int maxPrice) {
-        List<Product> products = productService.findAllByPriceBetween(minPrice, maxPrice);
-        List<ProductDto> productDto = new ArrayList<>();
-        for (Product p: products) {
-            productDto.add(new ProductDto(p));
-        }
-        return productDto;
+        return productService.findAllByPriceBetween(minPrice, maxPrice).stream().map(ProductDto::new).collect(Collectors.toList());
     }
 
     @GetMapping("products/more")
     public List<ProductDto> findAllByPriceGreaterThan(@RequestParam(name = "min_price") int minPrice) {
-        List<Product> products = productService.findAllByPriceGreaterThan(minPrice);
-        List<ProductDto> productDto = new ArrayList<>();
-        for (Product p: products) {
-            productDto.add(new ProductDto(p));
-        }
-        return productDto;
+        return productService.findAllByPriceGreaterThan(minPrice).stream().map(ProductDto::new).collect(Collectors.toList());
     }
 
     @GetMapping("products/less")
     public List<ProductDto> findAllByPriceLessThan(@RequestParam(name = "max_price") int maxPrice) {
-        List<Product> products = productService.findAllByPriceLessThan(maxPrice);
-        List<ProductDto> productDto = new ArrayList<>();
-        for (Product p: products) {
-            productDto.add(new ProductDto(p));
-        }
-        return productDto;
+        return productService.findAllByPriceLessThan(maxPrice).stream().map(ProductDto::new).collect(Collectors.toList());
     }
+
+    @GetMapping("/product/{id}/incrementCost")
+    public ProductDto incrementCostById(@PathVariable Long id){
+        return new ProductDto(productService.incrementCostById(id));
+    }
+
+    @GetMapping("/product/{id}/decrementCost")
+    public ProductDto decrementCostById(@PathVariable Long id){
+        return new ProductDto(productService.decrementCostById(id));
+    }
+
 }

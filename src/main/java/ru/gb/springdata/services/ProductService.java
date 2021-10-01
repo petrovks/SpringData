@@ -40,4 +40,19 @@ public class ProductService {
     public void delete(Long id) {
         productRepository.deleteById(id);
     }
+
+
+    public Product incrementCostById(Long id) {
+        Product product = findById(id).get();
+        product.setPrice(product.getPrice() + 1);
+        save(product);
+        return product;
+    }
+
+    public Product decrementCostById(Long id) {
+        Product product = findById(id).get();
+        product.setPrice(product.getPrice() - 1);
+        save(product);
+        return product;
+    }
 }
