@@ -1,6 +1,8 @@
 package ru.gb.springdata.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.gb.springdata.model.Product;
 import ru.gb.springdata.repositories.ProductRepository;
@@ -13,8 +15,8 @@ import java.util.Optional;
 public class ProductService {
     private final ProductRepository productRepository;
 
-    public List<Product> findAll() {
-        return productRepository.findAll();
+    public Page<Product> findAll(int pageIndex, int pageSize) {
+        return productRepository.findAll(PageRequest.of(pageIndex, pageSize));
     }
 
     public List<Product> findAllByPriceBetween(int minPrice, int maxPrice) {

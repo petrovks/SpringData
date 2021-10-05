@@ -1,6 +1,7 @@
 package ru.gb.springdata.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.springdata.dto.ProductDto;
@@ -20,8 +21,11 @@ public class ProductController {
     private final CategoryService categoryService;
 // список всехпродуктов
     @GetMapping("/products")
-    public List<ProductDto> findAll() {
-        return productService.findAll().stream().map(ProductDto::new).collect(Collectors.toList());
+    public Page<ProductDto> findAll(@RequestParam(defaultValue = "1", name = "p") int pageIndex) {
+        if (pageIndex < 1) {
+            pageIndex = 1;
+        }
+        return productService.findAll(pageIndex - 1, 10).map(ProductDto::new);
     }
 //выбор продукта по id
     @GetMapping("/products/{id}")

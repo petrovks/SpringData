@@ -24,7 +24,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="p in products" align="center">
+    <tr ng-repeat="p in productsPage.content" align="center">
       <td>{{p.id}}</td>
       <td>{{p.title}}</td>
       <td>{{p.categoryTitle}}</td>
@@ -43,11 +43,20 @@
         <button class="btn btn-primary" ng-click="delete(p)">Удалить</button>
       </td>
     </tr>
+    <tr>
+      <td ng-repeat="">
+        <button class="btn btn-primary"></button>
+      </td>
+    </tr>
+    <tr>
+      <td ng-repeat="p in productsPage.totalPages">
+    </tr>
     </tbody>
   </table>
   <span></span>
   <p></p>
-  <button class="btn btn-primary" ng-click="loadProducts()">refresh</button>
+  <button class="btn btn-primary" ng-click="loadProducts(1)">1</button>
+  <button class="btn btn-primary" ng-click="loadProducts(2)">2</button>
   <!--   <a th:href="@{'/'}" class="btn btn-primary">На главную страницу</a>
      <p></p>
     <a th:href="@{'/create'}" class="btn btn-primary">Добавить продукт</a>-->
