@@ -20,6 +20,7 @@
       <td>Price</td>
       <td></td>
       <td></td>
+      <td></td>
       <td>delete</td>
     </tr>
     </thead>
@@ -40,23 +41,48 @@
         <button class="btn btn-primary" ng-click="showInfo(p)">Инфо</button>
       </td>
       <td>
+        <button class="btn btn-primary" ng-click="prepareForUpdate(p.id)">Изменить</button>
+      </td>
+      <td>
         <button class="btn btn-primary" ng-click="delete(p)">Удалить</button>
       </td>
     </tr>
-    <tr>
-      <td ng-repeat="">
-        <button class="btn btn-primary"></button>
-      </td>
-    </tr>
-    <tr>
-      <td ng-repeat="p in productsPage.totalPages">
-    </tr>
     </tbody>
   </table>
-  <span></span>
   <p></p>
-  <button class="btn btn-primary" ng-click="loadProducts(1)">1</button>
-  <button class="btn btn-primary" ng-click="loadProducts(2)">2</button>
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      <li class="page-item" ng-repeat="pageIndex in paginationArray">
+        <button class="page-link" ng-click="loadProducts(pageIndex)">{{pageIndex}}</button>
+      </li>
+    </ul>
+  </nav>
+  <p></p>
+
+  <h3>Добавить новый продукт</h3>
+  <form novalidate ng-submit="createNewProduct()">
+    <input class="form-control" type="text" placeholder="Название" ng-model="new_product.title">
+    <p></p>
+    <input class="form-control" type="number" placeholder="Цена" ng-model="new_product.price">
+    <p></p>
+    <input class="form-control" type="text" placeholder="Название категории" ng-model="new_product.categoryTitle">
+    <p></p>
+    <button type="submit" class="btn btn-primary">Создать</button>
+  </form>
+  <p></p>
+  <h3>Изменить продукт</h3>
+  <p></p>
+  <form novalidate ng-submit="updateProduct()">
+    <input class="form-control" type="number" hidden placeholder="Id" ng-model="update_product.id">
+    <p></p>
+    <input class="form-control" type="text" placeholder="Название" ng-model="update_product.title">
+    <p></p>
+    <input class="form-control" type="number" placeholder="Цена" ng-model="update_product.price">
+    <p></p>
+    <input class="form-control" type="text" placeholder="Название категории" ng-model="update_product.categoryTitle">
+    <p></p>
+    <button type="submit" class="btn btn-primary">Изменить</button>
+  </form>
   <!--   <a th:href="@{'/'}" class="btn btn-primary">На главную страницу</a>
      <p></p>
     <a th:href="@{'/create'}" class="btn btn-primary">Добавить продукт</a>-->

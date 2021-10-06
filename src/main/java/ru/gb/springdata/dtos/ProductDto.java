@@ -1,4 +1,4 @@
-package ru.gb.springdata.dto;
+package ru.gb.springdata.dtos;
 
 
 import lombok.Data;
