@@ -2,10 +2,15 @@ package ru.gb.springdata.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.springdata.dtos.ProductDto;
+import ru.gb.springdata.exceptions.DataValidationException;
 import ru.gb.springdata.exceptions.ResourceNotFoundException;
 import ru.gb.springdata.model.Product;
+import ru.gb.springdata.services.CartService;
 import ru.gb.springdata.services.CategoryService;
 import ru.gb.springdata.services.ProductService;
 import ru.gb.springdata.model.Category;
@@ -19,6 +24,7 @@ import java.util.stream.Collectors;
 public class ProductController {
     private final ProductService productService;
     private final CategoryService categoryService;
+   // private final CartService cartService;
 // список всехпродуктов
     @GetMapping
     public Page<ProductDto> findAll(@RequestParam(defaultValue = "1", name = "p") int pageIndex) {
@@ -35,7 +41,11 @@ public class ProductController {
     //добавление нового продукта
 
     @PostMapping
-    public ProductDto save(@RequestBody ProductDto productDto) {
+    public ProductDto save(@RequestBody @Validated ProductDto productDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new DataValidationException(bindingResult.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.toList()));
+        }
+
         Product product = new Product();
         product.setPrice(productDto.getPrice());
         product.setTitle(productDto.getTitle());
@@ -46,7 +56,10 @@ public class ProductController {
     }
 
     @PutMapping
-    public void update(@RequestBody ProductDto productDto){
+    public void update(@RequestBody @Validated ProductDto productDto, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            throw new DataValidationException(bindingResult.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.toList()));
+        }
         productService.updateProduct(productDto);
     }
 //удаление продукта
@@ -80,5 +93,11 @@ public class ProductController {
     public ProductDto decrementCostById(@PathVariable(name = "id") Long id){
         return new ProductDto(productService.decrementCostById(id));
     }
+
+//    @GetMapping("/addToCart/{id}")
+//    public void addProductToCartById(@PathVariable(name = "id") Long id) {
+//        cartService.addProductToCartById(productService.findById(id).orElseThrow(() ->
+//                new ResourceNotFoundException("Product with id = " + id + " not found!")));
+//    }
 
 }
