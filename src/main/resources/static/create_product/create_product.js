@@ -1,5 +1,5 @@
-angular.module('market-front').controller('createProductController', function ($scope, $http, $location) {
-    const contextPath = 'http://localhost:8189/webapp/';
+angular.module('market-front').controller('createProductController', function ($scope, $http, $location, $localStorage) {
+    const contextPath = 'http://localhost:8190/webapp/';
 
     $scope.createProduct = function () {
         if ($scope.new_product == null) {
