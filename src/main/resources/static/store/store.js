@@ -1,5 +1,5 @@
-angular.module('market-front').controller('storeController', function ($scope, $http, $location) {
-    const contextPath = 'http://localhost:8189/webapp/';
+angular.module('market-front').controller('storeController', function ($rootScope, $scope, $http, $location, $localStorage) {
+    const contextPath = 'http://localhost:8190/webapp/';
     let currentPageIndex = 1;
 
     $scope.loadProducts = function (pageIndex = 1) {
@@ -23,11 +23,11 @@ angular.module('market-front').controller('storeController', function ($scope, $
             arr.push(i);
         }
         return arr;
-    }
+    };
 
     $scope.navToEditProductPage = function (productId) {
         $location.path('/edit_product/' + productId);
-    }
+    };
 
     $scope.showInfo = function (product) {
         alert('Title: ' + product.title + '\n' + 'Price: ' + product.price);
@@ -67,7 +67,23 @@ angular.module('market-front').controller('storeController', function ($scope, $
                 $scope.product = response.data;
                 $scope.loadProducts();
             });
-    }
+    };
+
+    $rootScope.isAdminLoggedIn = function () {
+        if ($localStorage.webMarketUser.username == 'admin') {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    $rootScope.isUserLoggedIn = function () {
+        if ($localStorage.webMarketUser) {
+            return true;
+        } else {
+            return false;
+        }
+    };
 
     $scope.loadProducts();
 });

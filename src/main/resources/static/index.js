@@ -1,6 +1,6 @@
 (function () {
     angular
-        .module('market-front', ['ngRoute'])
+        .module('market-front', ['ngRoute', 'ngStorage'])
         .config(config)
         .run(run);
 
@@ -26,6 +26,10 @@
                 templateUrl: 'cart/cart.html',
                 controller: 'cartController'
             })
+            .when('/auth', {
+                templateUrl: 'auth/auth.html',
+                controller: 'authController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
@@ -35,7 +39,50 @@
     }
 })();
 
-angular.module('market-front').controller('indexController', function ($rootScope, $scope, $http) {
-    const contextPath = 'http://localhost:8189/market';
+angular.module('market-front').controller('indexController', function ($rootScope, $scope, $http, $localStorage, $location) {
+    const contextPath = 'http://localhost:8190/webapp';
 
+    $scope.tryToLogout = function () {
+        $scope.clearUser();
+        if ($scope.user.username) {
+            $scope.user.username = null;
+            $localStorage.webMarketUser.username = null;
+        }
+        if ($scope.user.password) {
+            $scope.user.password = null;
+        }
+    };
+
+    $scope.clearUser = function () {
+        delete $localStorage.webMarketUser;
+        $http.defaults.headers.common.Authorization = '';
+    };
+
+    $rootScope.isUserLoggedIn = function () {
+        if ($localStorage.webMarketUser) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    $scope.NavToAuth = function () {
+        $location.path("/auth");
+    }
+
+    $rootScope.isAdminLoggedIn = function () {
+        if ($localStorage.webMarketUser.username == 'admin') {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    $rootScope.isUserLoggedIn = function () {
+        if ($localStorage.webMarketUser) {
+            return true;
+        } else {
+            return false;
+        }
+    };
 });
