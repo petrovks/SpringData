@@ -19,7 +19,7 @@ public class CartController {
 
     @GetMapping
     public List<ProductDto> cartInfo() {
-       return cartService.cartInfo();
+       return cartService.getCart();
     }
 
     @GetMapping("/delete/all")

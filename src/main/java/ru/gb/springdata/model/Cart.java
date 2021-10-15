@@ -22,4 +22,8 @@ public class Cart {
         productList = new ArrayList<>();
     }
 
+    public void clear() {
+        productList.clear();
+    }
+
 }
