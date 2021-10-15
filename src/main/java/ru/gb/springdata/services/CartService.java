@@ -2,14 +2,9 @@ package ru.gb.springdata.services;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import ru.gb.springdata.dtos.ProductDto;
-import ru.gb.springdata.exceptions.ResourceNotFoundException;
 import ru.gb.springdata.model.Cart;
-import ru.gb.springdata.model.Product;
-import ru.gb.springdata.repositories.CartRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,21 +13,25 @@ import java.util.List;
 @Data
 @RequiredArgsConstructor
 public class CartService {
-    private final CartRepository cartRepository;
+    private final Cart cart;
 
     public void addProductToCartById(ProductDto product) {
-        cartRepository.addToCart(product);
+        //List<ProductDto> list = cart.getProductList();
+        cart.getProductList().add(product);
+      //  cart.setProductList(list);
     }
 
     public void deleteProductFromCart(ProductDto product) {
-        cartRepository.deleteFromCart(product);
+       // List<ProductDto> list = cart.getProductList();
+        cart.getProductList().remove(product);
+        //cart.setProductList(list);
     }
 
-    public List<ProductDto> cartInfo() {
-        return cartRepository.cartInfo();
+    public List<ProductDto> getCart() {
+        return cart.getProductList();
     }
 
     public void deleteAllProductFromCart() {
-        cartRepository.clearProductsList();
+        cart.clear();
     }
 }

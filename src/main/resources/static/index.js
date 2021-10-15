@@ -30,6 +30,10 @@
                 templateUrl: 'auth/auth.html',
                 controller: 'authController'
             })
+            .when('/registration', {
+                templateUrl: 'registration/registration.html',
+                controller: 'createUserController'
+            })
             .otherwise({
                 redirectTo: '/'
             });

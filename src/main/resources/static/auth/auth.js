@@ -16,4 +16,8 @@ angular.module('market-front').controller('authController', function ($scope, $h
             });
     };
 
+    $scope.NavToRegistration = function () {
+        $location.path("/registration");
+    }
+
 });
