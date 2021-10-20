@@ -1,28 +1,36 @@
 <div>
     <p></p>
     <h3>Корзина</h3>
-    <table class="table">
+    <span ng-show="cart.items.length == 0">Ваша корзина пуста</span>
+    <table class="table"  ng-show="cart.items.length > 0">
         <thead>
         <tr align="center">
-            <td>ID</td>
-            <td>Title</td>
-            <td>Category</td>
-            <td>Price</td>
-            <td>delete</td>
+            <td>Название</td>
+            <td>Количество</td>
+            <td>Цена</td>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="p in products" align="center">
-            <td>{{p.id}}</td>
-            <td>{{p.title}}</td>
-            <td>{{p.categoryTitle}}</td>
-            <td width="50px" align="center">{{p.price}}</td>
+        <tr ng-repeat="p in cart.items" align="center">
+            <td>{{p.productTitle}}</td>
             <td>
-                <button class="btn btn-primary" ng-click="deleteFromCart(p)">Удалить</button>
+                <button class="btn btn-primary" ng-click="decrementItem(p.productId)">-</button>
+                {{p.quantity}}
+                <button class="btn btn-primary" ng-click="incrementItem(p.productId)">+</button>
+                <button class="btn btn-danger" ng-click="removeItem(p.productId)">X</button>
             </td>
+            <td width="50px" align="center">{{p.pricePerProduct + ' x ' + p.quantity + ' = ' + p.price}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{'Итого: ' + cart.totalPrice}}</td>
         </tr>
         </tbody>
     </table>
-     <button class="btn btn-primary" ng-click="deleteAllFromCart()">Очистить корзину</button>
     <p></p>
+    <button class="btn btn-primary" ng-click="deleteAllFromCart()" ng-show="cart.items.length > 0" >Очистить корзину</button>
+    <button class="btn btn-primary" ng-click="checkOut()" ng-show="isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
+    <button class="btn btn-secondary" ng-click="disabledCheckOut()" ng-show="!isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
 </div>

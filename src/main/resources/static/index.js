@@ -34,12 +34,23 @@
                 templateUrl: 'registration/registration.html',
                 controller: 'createUserController'
             })
+            .when('/order_confirmation', {
+                templateUrl: 'order_confirmation/order_confirmation.html',
+                controller: 'orderConfirmationController'
+            })
+            .when('/orders', {
+                templateUrl: 'orders/orders.html',
+                controller: 'ordersController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
     }
 
-    function run($rootScope, $http) {
+    function run($rootScope, $http, $localStorage) {
+        if ($localStorage.webMarketUser) {
+            $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.webMarketUser.token;
+        }
     }
 })();
 

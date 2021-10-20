@@ -69,3 +69,32 @@ values ('user', '$2y$10$PFDtzhglT3DRPKlc/ARqD.JHXSN3vNZEoefh/EAiol.gEviSSeAnK', 
 insert into users_roles (user_id, role_id)
 VALUES (1, 1),
        (2, 2);
+
+create table orders
+(
+    id         bigserial primary key,
+    user_id    bigint references users (id),
+    address    varchar(255),
+    phone      varchar(255),
+    price      integer,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp
+);
+
+create table order_items
+(
+    id                bigserial primary key,
+    order_id          bigint references orders (id),
+    product_id        bigint references products (id),
+    quantity          integer,
+    price_per_product integer,
+    price             integer,
+    created_at        timestamp default current_timestamp,
+    updated_at        timestamp default current_timestamp
+);
+
+insert into orders (user_id, address, phone, price)
+values (1, '1111', '1111', 100);
+
+insert into order_items (order_id, product_id, quantity, price_per_product, price)
+values (1, 1, 10, 10, 100);

@@ -24,9 +24,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                .antMatchers("/create_product/**").hasAnyRole("ADMIN")
-                .antMatchers("/update_product/**").hasAnyRole("ADMIN")
-                .antMatchers("/delete/**").hasAnyRole("ADMIN")
+                .antMatchers("/create_product/**", "/update_product/**", "/products/delete/**").hasAnyRole("ADMIN")
+                .antMatchers("/api/v1/orders/**").authenticated()
                 .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().permitAll()
                 .and()
