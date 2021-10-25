@@ -11,7 +11,6 @@ angular.module('market-front').controller('storeController', function ($rootScop
                 p: pageIndex
             }
         }).then(function (response) {
-            console.log(response);
             $scope.productsPage = response.data;
             $scope.paginationArray = $scope.generatePagesIndexes(1, $scope.productsPage.totalPages);
         });
@@ -36,8 +35,6 @@ angular.module('market-front').controller('storeController', function ($rootScop
     $scope.dec = function (product) {
         $http.get(contextPath + 'api/v1/products/' + product.id + '/decrementCost')
             .then(function (response) {
-                console.log(response);
-                $scope.product = response.data;
                 $scope.loadProducts();
             });
     };
@@ -45,26 +42,22 @@ angular.module('market-front').controller('storeController', function ($rootScop
     $scope.inc = function (product) {
         $http.get(contextPath + 'api/v1/products/' + product.id + '/incrementCost')
             .then(function (response) {
-                console.log(response);
-                $scope.product = response.data;
                 $scope.loadProducts();
             });
     };
 
-    $scope.addProductToCart = function (product) {
-        $http.get(contextPath + 'api/v1/cart/add/' + product.id)
-            .then(function (response) {
-                console.log(response);
-                alert('Продукт успешно добавлен в корзину');
-                $scope.product = response.data;
-            });
+    $scope.addProductToCart = function (productId) {
+        $http({
+            url: contextPath + 'api/v1/cart/' + $localStorage.webMarketGuestCartId + '/add/' + productId,
+            method: 'GET'
+        }).then(function (response) {
+            console.log(response);
+        });
     };
 
     $scope.delete = function (product) {
         $http.get(contextPath + 'api/v1/products/delete/' + product.id)
             .then(function (response) {
-                console.log(response);
-                $scope.product = response.data;
                 $scope.loadProducts();
             });
     };

@@ -48,8 +48,15 @@
     }
 
     function run($rootScope, $http, $localStorage) {
+        const contextPath = 'http://localhost:8190/webapp';
         if ($localStorage.webMarketUser) {
             $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.webMarketUser.token;
+        }
+        if (!$localStorage.webMarketGuestCartId) {
+            $http.get(contextPath + '/api/v1/cart/generate')
+                .then(function successCallback(response) {
+                    $localStorage.webMarketGuestCartId = response.data.value;
+                });
         }
     }
 })();

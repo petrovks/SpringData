@@ -5,11 +5,37 @@
         <thead>
         <tr>
             <td>Заказ</td>
+            <td></td>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="ord in orders">
-            <td>{{ord.items}}</td>
+            <td>{{ord.id}}</td>
+            <td>
+                <table class="table">
+                    <thead>
+                    <tr align="center">
+                        <td>Название</td>
+                        <td>Количество</td>
+                        <td>Цена</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="p in ord.items" align="center">
+                        <td>{{p.productTitle}}</td>
+                        <td>
+                            {{p.quantity}}
+                        </td>
+                        <td align="center">{{p.pricePerProduct + ' x ' + p.quantity + ' = ' + p.price}}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>{{'Итого: ' + ord.price}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
         </tr>
         </tbody>
     </table>

@@ -1,18 +1,18 @@
-angular.module('market-front').controller('cartController', function ($scope, $http, $location) {
+angular.module('market-front').controller('cartController', function ($scope, $http, $location, $localStorage) {
     const contextPath = 'http://localhost:8190/webapp/';
 
     $scope.refreshCart = function () {
-        $http.get(contextPath + 'api/v1/cart')
-            .then(function (response) {
-            console.log(response);
+        $http({
+            url: contextPath + 'api/v1/cart/' + $localStorage.webMarketGuestCartId,
+            method: 'GET'
+        }).then(function (response) {
             $scope.cart = response.data;
         });
     };
 
     $scope.removeItem = function (productId) {
-        $http.get(contextPath + 'api/v1/cart/remove/' + productId)
+        $http.get(contextPath + 'api/v1/cart/' + $localStorage.webMarketGuestCartId + '/remove/' + productId)
             .then(function (response) {
-                console.log(response);
                 $scope.product = response.data;
                 $scope.refreshCart();
             });
@@ -20,7 +20,7 @@ angular.module('market-front').controller('cartController', function ($scope, $h
 
     $scope.incrementItem = function (productId) {
         $http({
-            url: contextPath + 'api/v1/cart/add/' + productId,
+            url: contextPath + 'api/v1/cart/' + $localStorage.webMarketGuestCartId +'/increment/' + productId,
             method: 'GET'
         }).then(function (response) {
             $scope.refreshCart();
@@ -29,7 +29,7 @@ angular.module('market-front').controller('cartController', function ($scope, $h
 
     $scope.decrementItem = function (productId) {
         $http({
-            url: contextPath + 'api/v1/cart/decrement/' + productId,
+            url: contextPath + 'api/v1/cart/' + $localStorage.webMarketGuestCartId + '/decrement/' + productId,
             method: 'GET'
         }).then(function (response) {
             $scope.refreshCart();
@@ -37,7 +37,7 @@ angular.module('market-front').controller('cartController', function ($scope, $h
     };
 
     $scope.deleteAllFromCart = function () {
-        $http.get(contextPath + 'api/v1/cart/remove/all')
+        $http.get(contextPath + 'api/v1/cart/' + $localStorage.webMarketGuestCartId + '/remove/all')
             .then(function (response) {
                 console.log(response);
                 $scope.products = response.data;

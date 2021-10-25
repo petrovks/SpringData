@@ -33,7 +33,7 @@
                 <button class="btn btn-primary" ng-click="showInfo(p)">Инфо</button>
             </td>
             <td>
-                <button class="btn btn-primary" ng-click="addProductToCart(p)">В корзину</button>
+                <button class="btn btn-primary" ng-click="addProductToCart(p.id)">В корзину</button>
             </td>
             <td ng-show="isUserLoggedIn()">
                 <button class="btn btn-primary" ng-show="isAdminLoggedIn()" ng-click="navToEditProductPage(p.id)">Изменить</button>
