@@ -4,6 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.gb.springdata.dtos.ProductDto;
+import ru.gb.springdata.exceptions.ResourceNotFoundException;
+import ru.gb.springdata.model.Category;
 import ru.gb.springdata.model.Product;
 import ru.gb.springdata.repositories.ProductRepository;
 
@@ -14,6 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+    private final CategoryService categoryService;
 
     public Page<Product> findAll(int pageIndex, int pageSize) {
         return productRepository.findAll(PageRequest.of(pageIndex, pageSize));
@@ -57,4 +62,16 @@ public class ProductService {
         save(product);
         return product;
     }
+
+    @Transactional
+    public void updateProduct(ProductDto productDto){
+        Product product = findById(productDto.getId()).orElseThrow(() -> new ResourceNotFoundException("Product with id = " +  productDto.getId() + " not found!"));
+        product.setTitle(productDto.getTitle());
+        product.setPrice(productDto.getPrice());
+        if (!product.getCategory().getTitle().equals(productDto.getCategoryTitle())) {
+            Category category = categoryService.findByTitle(productDto.getCategoryTitle()).orElseThrow(() -> new ResourceNotFoundException("Category " + productDto.getCategoryTitle() + " not found!"));
+            product.setCategory(category);
+        }
+    }
+
 }
