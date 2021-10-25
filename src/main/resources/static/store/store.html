@@ -1,0 +1,56 @@
+<div>
+    <p></p>
+    <h3>Каталог товаров</h3>
+    <table class="table">
+        <thead>
+        <tr align="center">
+            <td>ID</td>
+            <td>Title</td>
+            <td>Category</td>
+            <td></td>
+            <td>Price</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>delete</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="p in productsPage.content" align="center">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.categoryTitle}}</td>
+            <td width="50px">
+                <button class="btn btn-primary" ng-click="dec(p)">-</button>
+            </td>
+            <td width="50px" align="center">{{p.price}}</td>
+            <td width="50px">
+                <button class="btn btn-primary" ng-click="inc(p)">+</button>
+            </td>
+
+            <td>
+                <button class="btn btn-primary" ng-click="showInfo(p)">Инфо</button>
+            </td>
+            <td>
+                <button class="btn btn-primary" ng-click="addProductToCart(p)">В корзину</button>
+            </td>
+            <td>
+                <button class="btn btn-primary" ng-click="navToEditProductPage(p.id)">Изменить</button>
+            </td>
+            <td>
+                <button class="btn btn-primary" ng-click="delete(p)">Удалить</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <p></p>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="page-item" ng-repeat="pageIndex in paginationArray">
+                <button class="page-link" ng-click="loadProducts(pageIndex)">{{pageIndex}}</button>
+            </li>
+        </ul>
+    </nav>
+    <p></p>
+</div>
