@@ -1,0 +1,22 @@
+<div>
+    <p></p>
+    <h3>Статистика</h3>
+    <table class="table">
+        <thead>
+        <tr align="center">
+            <td>Class name</td>
+            <td>Total duration</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="s in statistic" align="center">
+            <td>{{s.className}}</td>
+            <td>
+                {{s.totalDuration}}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <p></p>
+
+</div>

@@ -42,6 +42,10 @@
                 templateUrl: 'orders/orders.html',
                 controller: 'ordersController'
             })
+            .when('/stat', {
+                templateUrl: 'stat/stat.html',
+                controller: 'statController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
@@ -73,6 +77,7 @@ angular.module('market-front').controller('indexController', function ($rootScop
         if ($scope.user.password) {
             $scope.user.password = null;
         }
+        $location.path("/");
     };
 
     $scope.clearUser = function () {

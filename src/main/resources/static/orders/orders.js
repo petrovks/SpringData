@@ -7,7 +7,6 @@ angular.module('market-front').controller('ordersController', function ($scope, 
             method: 'GET'
         }).then(function (response) {
             $scope.orders = response.data;
-            console.log($scope.orders);
         });
     };
 

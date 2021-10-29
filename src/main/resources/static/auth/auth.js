@@ -9,6 +9,9 @@ angular.module('market-front').controller('authController', function ($scope, $h
                     $localStorage.webMarketUser = {username: $scope.user.username, token: response.data.token};
                     $scope.user.username = null;
                     $scope.user.password = null;
+                    $http.get(contextPath + '/api/v1/cart/' + $localStorage.webMarketGuestCartId + '/merge')
+                        .then(function successCallback(response) {
+                        });
                     $location.path('/store');
                 }
             }, function errorCallback(response) {

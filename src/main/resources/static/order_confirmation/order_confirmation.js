@@ -11,6 +11,8 @@ angular.module('market-front').controller('orderConfirmationController', functio
         });
     };
 
+    $scope.loadCart();
+
     $scope.createOrder = function () {
         $http({
             url: contextPath + 'api/v1/orders',
@@ -22,5 +24,4 @@ angular.module('market-front').controller('orderConfirmationController', functio
         });
     };
 
-    $scope.loadCart();
 });
